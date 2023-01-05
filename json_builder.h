@@ -37,38 +37,38 @@ namespace json {
         explicit Context(Builder& builder);
 
     protected:
-        Builder &builder_;
+        Builder& builder_;
     };
 
     class KeyValueContext final : public Context {
     public:
-        explicit KeyValueContext(Builder &builder);
-        KeyItemContext Key(const std::string & key);
+        explicit KeyValueContext(Builder& builder);
+        KeyItemContext Key(const std::string& key);
         Builder& EndDict();
     };
 
     class KeyItemContext final : public Context {
     public:
-        explicit KeyItemContext(Builder &builder);
+        explicit KeyItemContext(Builder& builder);
         DictItemContext StartDict();
         ArrayItemContext StartArray();
-        KeyValueContext Value(const Node & value, bool is_start = false);
+        KeyValueContext Value(const Node& value, bool is_start = false);
     };
 
     class DictItemContext final : public Context {
     public:
-        explicit DictItemContext(Builder &builder);
-        KeyItemContext Key(const std::string & key) const;
+        explicit DictItemContext(Builder& builder);
+        KeyItemContext Key(const std::string& key) const;
         Builder& EndDict() const;
     };
 
     class ArrayItemContext final : public Context {
     public:
-        explicit ArrayItemContext(Builder &builder);
+        explicit ArrayItemContext(Builder& builder);
         DictItemContext StartDict();
         ArrayItemContext StartArray();
         Builder& EndArray();
-        ArrayItemContext Value(const Node & value, bool is_start = false);
+        ArrayItemContext Value(const Node& value, bool is_start = false);
     };
 
 } // namespace json

@@ -68,14 +68,14 @@ namespace json {
                 nodes_stack_.push(&root_);
             }
         } else if (!nodes_stack_.empty() && nodes_stack_.top()->IsDict()) {
-            Dict& dict = const_cast<Dict &>(nodes_stack_.top()->AsDict());
+            Dict& dict = const_cast<Dict&>(nodes_stack_.top()->AsDict());
             auto new_val = dict.insert({*key_, value});
             if (new_val.second && is_start && (value.IsDict() || value.IsArray())) {
                 nodes_stack_.push(&(new_val.first->second));
             }
             key_.reset();
         } else if (!nodes_stack_.empty() && nodes_stack_.top()->IsArray()) {
-            Array& arr = const_cast<Array &>(nodes_stack_.top()->AsArray());
+            Array& arr = const_cast<Array&>(nodes_stack_.top()->AsArray());
             arr.push_back(value);
             if (is_start && (value.IsDict() || value.IsArray())) {
                 nodes_stack_.push(&arr.back());
@@ -91,9 +91,9 @@ namespace json {
 
     ////////////////     KeyValueContext        //////////////
 
-    KeyValueContext::KeyValueContext(Builder &builder) : Context(builder) {}
+    KeyValueContext::KeyValueContext(Builder& builder) : Context(builder) {}
 
-    KeyItemContext KeyValueContext::Key(const std::string &key) {
+    KeyItemContext KeyValueContext::Key(const std::string& key) {
         return KeyItemContext(builder_.Key(key));
     }
 
@@ -103,7 +103,7 @@ namespace json {
 
     ////////////////     KeyItemContext        //////////////
 
-    KeyItemContext::KeyItemContext(Builder &builder) : Context(builder) {}
+    KeyItemContext::KeyItemContext(Builder& builder) : Context(builder) {}
 
     DictItemContext KeyItemContext::StartDict() {
         return builder_.StartDict();
@@ -113,15 +113,15 @@ namespace json {
         return builder_.StartArray();
     }
 
-    KeyValueContext KeyItemContext::Value(const Node &value, bool is_start) {
+    KeyValueContext KeyItemContext::Value(const Node& value, bool is_start) {
         return KeyValueContext(builder_.Value(value, is_start));
     }
 
     ////////////////     DictItemContext        //////////////
 
-    DictItemContext::DictItemContext(Builder &builder) : Context(builder) {}
+    DictItemContext::DictItemContext(Builder& builder) : Context(builder) {}
 
-    KeyItemContext DictItemContext::Key(const std::string &key) const {
+    KeyItemContext DictItemContext::Key(const std::string& key) const {
         return KeyItemContext(builder_.Key(key)); //
     }
 
@@ -131,7 +131,7 @@ namespace json {
 
     ////////////////     ArrayItemContext       //////////////
 
-    ArrayItemContext::ArrayItemContext(Builder &builder) : Context(builder) {}
+    ArrayItemContext::ArrayItemContext(Builder& builder) : Context(builder) {}
 
     DictItemContext ArrayItemContext::StartDict() {
         return builder_.StartDict();
@@ -145,7 +145,7 @@ namespace json {
         return builder_.EndArray();
     }
 
-    ArrayItemContext ArrayItemContext::Value(const Node &value, bool is_start) {
+    ArrayItemContext ArrayItemContext::Value(const Node& value, bool is_start) {
         return ArrayItemContext(builder_.Value(value, is_start));
     }
 
